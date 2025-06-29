@@ -1,0 +1,40 @@
+spotcast:
+  sp_dc: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  sp_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  country: FR
+
+default_config:
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.1.170
+    - 192.168.1.0/24
+
+# Example configuration.yaml entry
+sensor:
+  - platform: bbox
+    monitored_variables:
+      - down_max_bandwidth
+      - up_max_bandwidth
+      - current_down_bandwidth
+      - current_up_bandwidth
+      - uptime
+      - number_of_reboots
+
+input_select:
+  spotify_devices:
+    name: Appareils Spotify
+    options:
+      - NAME OF YOUR 1ST DEVICE SPOTIFY
+      - NAME OF YOUR 2ND DEVICE SPOTIFY
+      - NAME OF YOUR 3RD DEVICE SPOTIFY
+    initial: NAME OF YOUR 1ST DEVICE SPOTIFY
+
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

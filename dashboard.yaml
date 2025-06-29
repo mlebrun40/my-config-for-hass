@@ -1,0 +1,541 @@
+views:
+  - title: Accueil
+    type: sections
+    max_columns: 2
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            icon: ''
+            heading: ' '
+            heading_style: title
+          - type: custom:mushroom-template-card
+            primary: 'Heure actuelle: {{states(''sensor.time'')}}'
+            icon: mdi:clock
+            grid_options:
+              columns: 12
+              rows: 2
+            secondary: ''
+            layout: vertical
+          - show_current: true
+            show_forecast: true
+            type: weather-forecast
+            entity: weather.forecast_home
+            forecast_type: daily
+            name: 'Station météo '
+            theme: Graphite
+      - type: grid
+        cards:
+          - type: heading
+            icon: ''
+            heading: ' '
+            heading_style: title
+          - type: custom:mushroom-template-card
+            primary: Gestion de l'éclairage
+            icon: mdi:lightbulb
+            icon_color: yellow
+            secondary: ''
+            fill_container: true
+            grid_options:
+              columns: 9
+              rows: 2
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /tableau-de-bord/eclairage
+            hold_action:
+              action: navigate
+              navigation_path: /tableau-de-bord/eclairage
+            double_tap_action:
+              action: navigate
+              navigation_path: /tableau-de-bord/eclairage
+          - type: custom:mushroom-template-card
+            primary: Gestion multimédia
+            icon: mdi:video
+            icon_color: green
+            secondary: ''
+            fill_container: true
+            grid_options:
+              columns: 9
+              rows: 2
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /tableau-de-bord/multimedia
+            hold_action:
+              action: navigate
+              navigation_path: /tableau-de-bord/multimedia
+            double_tap_action:
+              action: navigate
+              navigation_path: /tableau-de-bord/multimedia
+          - type: custom:mushroom-template-card
+            primary: Gestion de la box
+            icon: mdi:web
+            icon_color: blue
+            secondary: ''
+            fill_container: true
+            grid_options:
+              columns: 9
+              rows: 2
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /tableau-de-bord/box-internet
+            hold_action:
+              action: navigate
+              navigation_path: /tableau-de-bord/box-internet
+            double_tap_action:
+              action: navigate
+              navigation_path: /tableau-de-bord/box-internet
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: |
+          # Bienvenue {{ user }} !
+
+          {% set heure = now().hour %}
+          {% if heure < 12 %}
+          Bonne journée à toi ☀️
+          {% elif heure < 18 %}
+          Bon après-midi ☀️
+          {% else %}
+          Ta journée s'est bien passée ? 🌙
+          {% endif %}
+      layout: center
+      badges_position: bottom
+      badges_wrap: scroll
+    icon: mdi:home
+    theme: Graphite
+    cards: []
+    badges:
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        color: green
+        name: Entrer en mode Kiosk
+        show_entity_picture: true
+        entity: device_tracker.23073rpbfg
+        icon: mdi:location-enter
+        tap_action:
+          action: url
+          url_path: https://home.mlebrun.fr/tableau-de-bord/0?kiosk
+        visibility:
+          - condition: screen
+            media_query: '(min-width: 768px) and (max-width: 1279px)'
+    background:
+      opacity: 33
+      alignment: center
+      size: cover
+      repeat: repeat
+      attachment: fixed
+      image: /api/image/serve/1fba77675b5d907a2808b8eb445fa509/original
+    dense_section_placement: true
+  - type: sections
+    max_columns: 4
+    title: Multimédia
+    path: multimedia
+    theme: Graphite
+    background:
+      opacity: 33
+      alignment: center
+      size: cover
+      repeat: repeat
+      attachment: fixed
+      image: /api/image/serve/de41849f1821bf46e4e906730d0b7abb/original
+    icon: mdi:movie
+    sections:
+      - type: grid
+        cards:
+          - type: custom:mushroom-title-card
+            title: Contrôle de la télé
+            alignment: center
+            subtitle: ''
+          - type: custom:mushroom-media-player-card
+            entity: media_player.televiseur_chambre
+            icon: mdi:cast-connected
+            fill_container: false
+            layout: vertical
+            use_media_info: true
+            grid_options:
+              columns: 12
+              rows: 2
+          - type: custom:mushroom-media-player-card
+            entity: media_player.televiseur_chambre_2
+            icon: mdi:television
+            media_controls:
+              - on_off
+              - shuffle
+              - play_pause_stop
+            volume_controls:
+              - volume_buttons
+              - volume_set
+              - volume_mute
+            grid_options:
+              columns: 12
+              rows: 2
+      - type: grid
+        cards:
+          - type: custom:mushroom-title-card
+            title: Musique
+            alignment: center
+            subtitle: ''
+          - type: custom:mushroom-media-player-card
+            entity: media_player.spotify_m_l
+            media_controls:
+              - on_off
+              - shuffle
+              - previous
+              - play_pause_stop
+              - next
+              - repeat
+            volume_controls:
+              - volume_set
+              - volume_buttons
+            show_volume_level: true
+            use_media_info: false
+            collapsible_controls: true
+            icon: mdi:spotify
+            icon_type: entity-picture
+            layout: vertical
+            primary_info: name
+            secondary_info: state
+            fill_container: false
+            grid_options:
+              columns: full
+              rows: 3
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Gestion multimédia
+          Vous pouvez lancer du contenu directement depuis ici ✨
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Retour
+        icon: mdi:keyboard-return
+        color: white
+        tap_action:
+          action: navigate
+          navigation_path: /tableau-de-bord/0
+        hold_action:
+          action: navigate
+          navigation_path: /tableau-de-bord
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: input_button.netflix
+        name: Lancer Netflix
+        icon: mdi:netflix
+        show_entity_picture: false
+        tap_action:
+          action: url
+          url_path: https://netflix.com
+        color: red
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: input_button.spotify
+        name: Lancer Spotify
+        icon: mdi:spotify
+        show_entity_picture: false
+        tap_action:
+          action: url
+          url_path: https://open.spotify.com/
+        color: green
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: input_button.canalplus
+        name: Lancer Canal +
+        icon: mdi:plus
+        show_entity_picture: false
+        tap_action:
+          action: url
+          url_path: https://canalplus.com/
+        color: white
+    subview: true
+    cards: []
+  - type: sections
+    max_columns: 2
+    title: Éclairage
+    path: eclairage
+    icon: mdi:lightbulb
+    theme: Graphite
+    subview: true
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Chambre
+            heading_style: title
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: light.chambre_2
+            show_state: true
+            icon_height: 50px
+            grid_options:
+              columns: 12
+              rows: 2
+          - type: custom:mushroom-light-card
+            entity: light.chambre_2
+            fill_container: false
+            grid_options:
+              columns: 12
+              rows: 2
+            use_light_color: true
+            show_brightness_control: true
+            show_color_temp_control: true
+            show_color_control: true
+            secondary_info: none
+            primary_info: state
+            icon_color: light-grey
+            collapsible_controls: true
+            visibility:
+              - condition: state
+                entity: light.chambre_2
+                state: 'on'
+      - type: grid
+        cards:
+          - type: heading
+            heading: Bureau
+            heading_style: title
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: light.bureau
+            show_state: true
+            icon_height: 50px
+            grid_options:
+              columns: 12
+              rows: 2
+          - type: custom:mushroom-light-card
+            entity: light.bureau
+            fill_container: false
+            grid_options:
+              columns: 12
+              rows: 2
+            use_light_color: true
+            show_brightness_control: true
+            show_color_temp_control: true
+            show_color_control: true
+            secondary_info: none
+            primary_info: state
+            icon_color: light-grey
+            collapsible_controls: true
+            visibility:
+              - condition: state
+                entity: light.bureau
+                state: 'on'
+      - type: grid
+        cards:
+          - type: heading
+            heading: Spot
+            heading_style: title
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: light.spot
+            show_state: true
+            icon_height: 50px
+            grid_options:
+              columns: 12
+              rows: 2
+          - type: custom:mushroom-light-card
+            fill_container: false
+            grid_options:
+              columns: 12
+              rows: 2
+            use_light_color: true
+            show_brightness_control: true
+            show_color_temp_control: true
+            show_color_control: true
+            secondary_info: none
+            primary_info: state
+            icon_color: light-grey
+            collapsible_controls: true
+            entity: light.spot
+            visibility:
+              - condition: state
+                entity: light.spot
+                state: 'on'
+      - type: grid
+        cards:
+          - type: heading
+            heading: Lumière d'ambiance
+            heading_style: title
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: light.lsc_moodlight
+            show_state: true
+            icon_height: 50px
+            grid_options:
+              columns: 12
+              rows: 2
+          - type: custom:mushroom-light-card
+            entity: light.lsc_moodlight
+            fill_container: false
+            grid_options:
+              columns: 12
+              rows: 2
+            use_light_color: true
+            show_brightness_control: true
+            show_color_temp_control: true
+            show_color_control: true
+            secondary_info: none
+            primary_info: state
+            icon_color: light-grey
+            collapsible_controls: true
+            visibility:
+              - condition: state
+                entity: light.lsc_moodlight
+                state: 'on'
+    header:
+      card:
+        type: markdown
+        content: '# Gestion de l''éclairage💡'
+        text_only: true
+    cards: []
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Retour
+        icon: mdi:keyboard-return
+        color: white
+        tap_action:
+          action: navigate
+          navigation_path: /tableau-de-bord/0
+        hold_action:
+          action: navigate
+          navigation_path: /tableau-de-bord/0
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: input_boolean.party_mode
+        name: Mode disco
+        show_entity_picture: false
+        tap_action:
+          action: toggle
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: input_boolean.mode_bleu
+        name: Mode bleu
+        show_entity_picture: false
+        tap_action:
+          action: toggle
+        icon: mdi:cloud
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: input_boolean.mode_noel
+        name: Mode Noël
+        show_entity_picture: false
+        tap_action:
+          action: toggle
+        icon: mdi:gift
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: input_boolean.mode_police
+        name: Mode Police
+        show_entity_picture: false
+        tap_action:
+          action: toggle
+        icon: mdi:police-badge
+    background:
+      opacity: 33
+      alignment: center
+      size: cover
+      repeat: repeat
+      attachment: fixed
+      image: /api/image/serve/d12f5f30b03c546cf4bb4a3c0def70d4/original
+  - type: sections
+    max_columns: 4
+    title: Box internet
+    path: box-internet
+    sections:
+      - type: grid
+        cards:
+          - type: custom:mushroom-title-card
+            title: État du réseaux
+          - graph: line
+            type: sensor
+            entity: sensor.bbox_vitesse_de_telechargement
+            detail: 1
+            theme: Graphite
+          - graph: line
+            type: sensor
+            entity: sensor.bbox_vitesse_de_telechargement_montant
+            detail: 1
+            theme: Graphite
+          - graph: none
+            type: sensor
+            entity: sensor.bbox_ip_externe
+            detail: 1
+            theme: Graphite
+        column_span: 1
+    icon: mdi:web
+    subview: true
+    cards: []
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Bonjour {{ user }}
+          Vous pouvez visualiser l'état du réseaux directement depuis ici ✨
+    background:
+      opacity: 33
+      alignment: center
+      size: cover
+      repeat: repeat
+      attachment: fixed
+      image: /api/image/serve/773343e908925dd565c22d9afbaf0a8a/original
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Retour
+        icon: mdi:keyboard-return
+        color: white
+        tap_action:
+          action: navigate
+          navigation_path: /tableau-de-bord/0
+        hold_action:
+          action: navigate
+          navigation_path: /tableau-de-bord/0
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: binary_sensor.bbox_etat_du_reseau_etendu_wan
+        name: État du réseaux
+        tap_action:
+          action: none
+        color: green
+        visibility:
+          - condition: state
+            entity: binary_sensor.bbox_etat_du_reseau_etendu_wan
+            state: 'on'
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: binary_sensor.bbox_etat_du_reseau_etendu_wan
+        name: État du réseaux
+        tap_action:
+          action: none
+        color: red
+        visibility:
+          - condition: state
+            entity: binary_sensor.bbox_etat_du_reseau_etendu_wan
+            state: 'off'
